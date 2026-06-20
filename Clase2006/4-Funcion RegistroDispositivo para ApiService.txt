@@ -1,0 +1,43 @@
+// ============================================
+// REGISTRO/ACTUALIZACIÓN DE DISPOSITIVO
+// ============================================
+    public void registrarDispositivo(Context context, String dispoUniqueId, ApiCallback callback)
+    {
+        try
+        {
+            // Usar la clase Dispositivo para obtener toda la info
+            Dispositivo dispositivo = new Dispositivo(context);
+
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("dispo_unique_id", dispoUniqueId);
+            jsonBody.put("dispo_nombre_equipo", dispositivo.getModel()); // Ej: "SM-S918B"
+            jsonBody.put("dispo_marca", dispositivo.getManufacturer()); // Ej: "Samsung"
+            jsonBody.put("dispo_modelo", dispositivo.getModel());       // Ej: "SM-S918B"
+            jsonBody.put("dispo_so", "Android");
+            jsonBody.put("dispo_so_version", dispositivo.getAndroidVersion()); // Ej: "14"
+
+            // ⚠️ MAC Address ya NO es accesible en Android 6+
+            // Enviamos null o el Android ID como alternativa
+            jsonBody.put("dispo_dir_mac", JSONObject.NULL);
+
+            // 🔍 DEBUG: ver qué se va a enviar
+            android.util.Log.d("API", "📱 Registrando dispositivo: " + jsonBody.toString(2));
+
+            RequestBody body = RequestBody.create(
+                    jsonBody.toString(),
+                    MediaType.parse("application/json; charset=utf-8")
+            );
+
+            Request request = new Request.Builder()
+                    .url(BASE_URL + REG_DISPO)
+                    .post(body)
+                    .addHeader("Accept", "application/json")
+                    .build();
+
+            executeRequest(request, callback);
+        }
+        catch (Exception e)
+        {
+            callback.onError("Error al construir petición de dispositivo: " + e.getMessage());
+        }
+    }
