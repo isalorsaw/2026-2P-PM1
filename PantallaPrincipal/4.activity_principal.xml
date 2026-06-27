@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5">
+
+    <!-- HEADER (lo mantienes igual) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#667eea"
+        android:padding="32dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/logo"
+            android:background="#FFFFFF"
+            android:padding="12dp"/>
+
+        <TextView
+            android:id="@+id/tvBienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌅 Buenos días"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvNombreUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Usuario"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="usuario@email.com"
+            android:textSize="14sp"
+            android:textColor="#E0E0E0"/>
+
+    </LinearLayout>
+
+    <!-- CONTENIDO CON RECYCLERVIEW -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📋 Menú Principal"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMenu"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"/>
+
+        <!-- BOTÓN DE CERRAR SESIÓN -->
+        <Button
+            android:id="@+id/btnCerrarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#F44336"
+            android:text="🚪 CERRAR SESIÓN"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

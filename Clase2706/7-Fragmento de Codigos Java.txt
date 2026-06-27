@@ -1,0 +1,103 @@
+=======En Activity del Login=========================
+#Agregar variable de Dispositivo
+private Dispositivo dispo;
+
+#Antes de llamar a Intent Pantalla Principal
+ String deviceid=dispo.getUniqueId();
+ registrarDispositivo(deviceid,user);
+ 
+#Funcion registrarDispositivo
+private void registrarDispositivo(String deviceID, JSONObject usuarioJson)
+    {
+        Log.d("LOGIN", "Registrando dispositivo: " + deviceID);
+
+        ApiService.getInstance().registrarDispositivo(MainActivity.this, deviceID, new ApiService.ApiCallback() {
+            @Override
+            public void onSuccess(JSONObject response)
+            {
+                runOnUiThread(() -> {
+                    try
+                    {
+                        String operacion=response.optString("operacion","DESCONECTADO");
+                        String mensajeOp=response.optString("mensaje_operacion","");
+
+                        Log.d("REGISTRO DISPOSITIVO", "Operación: " + operacion + " - " + mensajeOp);
+
+                        ses.guardarSesion(usuarioJson, deviceID);
+
+                        //Toast.makeText(MainActivity.this,mensajeOp,Toast.LENGTH_SHORT).show();
+                        ToastPersonalizado.exito(MainActivity.this, mensajeOp);
+                        irAHome();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.e("Dispositivo","Error al registrar dispositivo: " + e.getMessage() + " - Respuesta: " + response.toString());
+                        ses.guardarSesion(usuarioJson, deviceID);
+                        //irAHome();
+                    }
+                });
+            }
+            @Override
+            public void onError(String error)
+            {
+                runOnUiThread(() -> {
+                    Log.e("Dispositivo","Error al registrar dispositivo: " + error);
+                    //Toast.makeText(MainActivity.this,"Error al registrar dispositivo: " + error,Toast.LENGTH_LONG).show();
+                    ToastPersonalizado.error(MainActivity.this, "Error: al Registrar Dispositivo " + error);
+                    ses.guardarSesion(usuarioJson, deviceID);
+                    //irAHome();
+                });
+            }
+        });
+    }
+	
+
+===En ApiService==========================================================================================
+#Agregar Variable
+ //Metodo para guardar Dispositivo
+    // Constante al inicio de la clase
+    private static final String REGISTRAR_DISPOSITIVO = "/dispositivos/registrarDispositivo.php";
+
+    // ============================================
+// REGISTRO/ACTUALIZACIÓN DE DISPOSITIVO
+// ============================================
+    public void registrarDispositivo(Context context, String dispoUniqueId, ApiCallback callback)
+    {
+        try
+        {
+            // Usar la clase Dispositivo para obtener toda la info
+            Dispositivo dispositivo = new Dispositivo(context);
+
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("dispo_unique_id", dispoUniqueId);
+            jsonBody.put("dispo_nombre_equipo", dispositivo.getModel()); // Ej: "SM-S918B"
+            jsonBody.put("dispo_marca", dispositivo.getManufacturer()); // Ej: "Samsung"
+            jsonBody.put("dispo_modelo", dispositivo.getModel());       // Ej: "SM-S918B"
+            jsonBody.put("dispo_so", "Android");
+            jsonBody.put("dispo_so_version", dispositivo.getAndroidVersion()); // Ej: "14"
+
+            // ⚠️ MAC Address ya NO es accesible en Android 6+
+            // Enviamos null o el Android ID como alternativa
+            jsonBody.put("dispo_dir_mac", JSONObject.NULL);
+
+            // 🔍 DEBUG: ver qué se va a enviar
+            android.util.Log.d("API", "📱 Registrando dispositivo: " + jsonBody.toString(2));
+
+            RequestBody body = RequestBody.create(
+                    jsonBody.toString(),
+                    MediaType.parse("application/json; charset=utf-8")
+            );
+
+            Request request = new Request.Builder()
+                    .url(BASE_URL + REG_DISPO)
+                    .post(body)
+                    .addHeader("Accept", "application/json")
+                    .build();
+
+            executeRequest(request, callback);
+        }
+        catch (Exception e)
+        {
+            callback.onError("Error al construir petición de dispositivo: " + e.getMessage());
+        }
+    }

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consulta de Dispositivos"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- DatePicker 1 - Fecha Inicial -->
+        <!-- Fecha Inicial -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha Inicial:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnFechaInicial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📅 Seleccionar fecha inicial"
+            android:textSize="14sp"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#2196F3"/>
+
+        <!-- Fecha Final -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha Final:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnFechaFinal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📅 Seleccionar fecha final"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#2196F3"/>
+
+        <!-- Botón Generar -->
+        <Button
+            android:id="@+id/btnGenerar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generar Reporte"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#4CAF50"/>
+
+        <!-- ProgressBar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- TextView para mensajes -->
+        <TextView
+            android:id="@+id/tvMensaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
+
+        <!-- ScrollView para la tabla -->
+        <!-- Título de la sección de resultados -->
+        <TextView
+            android:id="@+id/tvTituloResultados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Resultados"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
+
+        <!-- Separador visual -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#BDBDBD"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- CardView que contiene la tabla como "item aparte" -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardResultados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/contenedorResultados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"/>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>
