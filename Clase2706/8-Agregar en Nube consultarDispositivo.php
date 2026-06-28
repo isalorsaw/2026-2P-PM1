@@ -1,5 +1,5 @@
 <?php
-//api/logs/consultarDispositivo.php
+//Colocar en api/logs/consultarDispositivo.php
 header('Content-Type: application/json; charset=utf-8'); // 👈 Clave: declarar UTF-8
 // 3️⃣ Conectar a la BD
 require_once '../../config/database.php';
